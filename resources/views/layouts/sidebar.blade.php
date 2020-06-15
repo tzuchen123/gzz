@@ -16,17 +16,21 @@
         @component('layouts.component.sidebar.item')
             @slot('name', 'merchandise')
             @slot('title', '商品管理')
-            <a class="collapse-item" href=" {{route('"merchandise.product.create')}} ">新增商品</a>
+            <a class="collapse-item" href=" {{route('merchandise.product.create')}} ">新增商品</a>
             <a class="collapse-item" href=" {{route('merchandise.product.list')}} ">商品列表</a>
             <a class="collapse-item" href=" {{route('merchandise.picture.create')}} ">新增商品照片</a>
             <a class="collapse-item" href=" {{route('merchandise.picture.list')}} ">商品照片列表</a>
         @endcomponent
 
         @component('layouts.component.sidebar.item')
-            @slot('name', 'banner')
-            @slot('title', 'banner管理')
-            <a class="collapse-item" href=" {{route('banner.create')}} ">新增Banner</a>
-            <a class="collapse-item" href=" {{route('banner.list')}} ">Banner列表</a>
+            @slot('name', 'blog')
+            @slot('title', '文章管理')
+            <a class="collapse-item" href=" {{route('blog.tag.create')}} ">新增標籤</a>
+            <a class="collapse-item" href=" {{route('blog.tag.list')}} ">標籤列表</a>
+            <a class="collapse-item" href=" {{route('blog.catagory.list')}} ">新增分類</a>
+            <a class="collapse-item" href=" {{route('blog.catagory.list')}} ">分類列表</a>
+            <a class="collapse-item" href=" {{route('blog.article.list')}} ">新增文章</a>
+            <a class="collapse-item" href=" {{route('blog.article.list')}} ">文章列表</a>
         @endcomponent
 
 

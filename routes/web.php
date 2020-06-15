@@ -42,7 +42,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::put('update/{bannerId}', "BannerController@update")->name("banner.update");
         Route::put('update/rank/{bannerId}', 'BannerController@updateRank')->name('banner.rank.update');
         Route::put('update_by_check', 'BannerController@updateByCheck')->name('banner.check.update');
-        Route::delete('delete/{bannerId}', "BannerController@delete")->name("banner.delete");
+        Route::delete('delete/{bannerId}', "BannerController@destroy")->name("banner.destroy");
     });
 
       //商品
@@ -57,7 +57,19 @@ Route::group(['prefix' => 'admin'], function () {
             Route::put('update/{productId}', "ProductController@update")->name("merchandise.product.update");
             Route::put('update/rank/{productId}', 'ProductController@updateRank')->name('merchandise.product.rank.update');
             Route::put('update_by_check', 'ProductController@updateByCheck')->name('merchandise.product.check.update');
-            Route::delete('delete/{productId}', "ProductController@delete")->name("merchandise.product.delete");
+            Route::delete('delete/{productId}', "ProductController@delete")->name("merchandise.product.destory");
+        });
+
+          //商品類別
+          Route::group(['prefix' => 'sort'], function () {
+            Route::get('list', "SortController@index")->name("merchandise.sort.list");
+            Route::get('create', "SortController@create")->name("merchandise.sort.create");
+            Route::post('store', "SortController@store")->name("merchandise.sort.store");
+            Route::get('edit/{sortId}', "SortController@edit")->name("merchandise.sort.edit");
+            Route::put('update/{sortId}', "SortController@update")->name("merchandise.sort.update");
+            Route::put('update/rank/{sortId}', 'SortController@updateRank')->name('merchandise.sort.rank.update');
+            Route::put('update_by_check', 'SortController@updateByCheck')->name('merchandise.sort.check.update');
+            Route::delete('delete/{sortId}', "SortController@delete")->name("merchandise.sort.destory");
         });
 
         //商品照片
@@ -69,7 +81,7 @@ Route::group(['prefix' => 'admin'], function () {
             Route::put('update/{pictureId}', "PictureController@update")->name("merchandise.picture.update");
             Route::put('update/rank/{pictureId}', 'PictureController@updateRank')->name('merchandise.picture.rank.update');
             Route::put('update_by_check', 'PictureController@updateByCheck')->name('merchandise.picture.check.update');
-            Route::delete('delete/{pictureId}', "PictureController@delete")->name("merchandise.picture.delete");
+            Route::delete('delete/{pictureId}', "PictureController@delete")->name("merchandise.picture.destory");
         });
     });
 
@@ -85,7 +97,7 @@ Route::group(['prefix' => 'admin'], function () {
             Route::put('update/{catagoryId}', "CatagoryController@update")->name("blog.catagory.update");
             Route::put('update/rank/{catagoryId}', 'CatagoryController@updateRank')->name('blog.catagory.rank.update');
             Route::put('update_by_check', 'CatagoryController@updateByCheck')->name('blog.catagory.check.update');
-            Route::delete('delete/{catagoryId}', "CatagoryController@delete")->name("blog.catagory.delete");
+            Route::delete('delete/{catagoryId}', "CatagoryController@delete")->name("blog.catagory.destory");
         });
 
          //tag
@@ -97,7 +109,7 @@ Route::group(['prefix' => 'admin'], function () {
             Route::put('update/{tagId}', "TagController@update")->name("blog.tag.update");
             Route::put('update/rank/{tagId}', 'TagController@updateRank')->name('blog.tag.rank.update');
             Route::put('update_by_check', 'TagController@updateByCheck')->name('blog.tag.check.update');
-            Route::delete('delete/{tagId}', "TagController@delete")->name("blog.tag.delete");
+            Route::delete('delete/{tagId}', "TagController@delete")->name("blog.tag.destory");
         });
 
         //文章
@@ -109,7 +121,7 @@ Route::group(['prefix' => 'admin'], function () {
             Route::put('update/{articleId}', "ArticleController@update")->name("blog.article.update");
             Route::put('update/rank/{articleId}', 'ArticleController@updateRank')->name('blog.article.rank.update');
             Route::put('update_by_check', 'ArticleController@updateByCheck')->name('blog.article.check.update');
-            Route::delete('delete/{articleId}', "ArticleController@delete")->name("blog.article.delete");
+            Route::delete('delete/{articleId}', "ArticleController@delete")->name("blog.article.destory");
         });
     });
 

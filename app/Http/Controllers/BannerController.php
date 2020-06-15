@@ -4,12 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Services\BannerService;
-use App\Services\ImageHandlerService;
+
 
 class BannerController extends Controller
 {
     protected $bannerService;
-    protected $imageHandlerService;
+ 
 
     // 透過 DI 注入 Service
     public function __construct(BannerService $bannerService)
@@ -107,15 +107,15 @@ class BannerController extends Controller
     }
 
 
-    public function delete(Request $request)
-    {
+    // public function delete(Request $request)
+    // {
 
-         $this->bannerService->delete(
-            $request->bannerId
-        );
-        //request->all()全部，except排除，only只送某幾個
-        return redirect()->back()->with("sucess", "刪除成功");
-    }
+    //      $this->bannerService->delete(
+    //         $request->bannerId
+    //     );
+    //     //request->all()全部，except排除，only只送某幾個
+    //     return redirect()->back()->with("sucess", "刪除成功");
+    // }
 
      /**
      * Remove the specified resource from storage.
@@ -123,8 +123,12 @@ class BannerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //完全刪除
+        $this->bannerService->destroy(
+            $request->bannerId
+        );
+        //request->all()全部，except排除，only只送某幾個
+        return redirect()->back()->with("sucess", "刪除成功");
     }
 }

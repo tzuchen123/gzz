@@ -140,18 +140,18 @@ abstract class Service
 
     }
 
-    public function softDelete($id, Array $imgs = [])
+    public function destroy($id, Array $imgs = [])
     {
         $model = $this->repo->find($id);
 
         // 刪除圖片
         if(count($imgs) != 0) {
             foreach ($imgs as $img) {
-                $this->imageHandlerService->delete($model[$img]);
+                $this->imageHandlerService->destroy($model[$img]);
             }
         }
 
-        return $this->repo->delete($id);
+        return $this->repo->destroy($id);
 
     }
 

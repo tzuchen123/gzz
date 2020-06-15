@@ -39,7 +39,7 @@ banner list
             <td>
                 @component('layouts.component.table.edit')
                     @slot('edit', route('banner.edit', [$item->id]))
-                    @slot('delete', route('banner.delete', [$item->id]))
+                    @slot('delete', route('banner.destroy', [$item->id]))
                 @endcomponent
             </td>
         </tr>

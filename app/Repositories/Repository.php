@@ -157,15 +157,16 @@ abstract class Repository
   * @param $id
   * @return Model
   */
- public function delete($id)
+//  public function delete($id)
+//  {
+//   return $this->model->delete($id);
+//  }
+
+ public function destroy($id)
  {
   return $this->model->destroy($id);
  }
 
- public function softDelete($id)
- {
-  return $this->model->destroy($id);
- }
 
  public function fillSave($data, $id = null)
  {
