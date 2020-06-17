@@ -16,6 +16,8 @@
         @component('layouts.component.sidebar.item')
             @slot('name', 'merchandise')
             @slot('title', '商品管理')
+            <a class="collapse-item" href=" {{route('merchandise.sort.create')}} ">新增商品分類</a>
+            <a class="collapse-item" href=" {{route('merchandise.sort.list')}} ">商品分類列表</a>
             <a class="collapse-item" href=" {{route('merchandise.product.create')}} ">新增商品</a>
             <a class="collapse-item" href=" {{route('merchandise.product.list')}} ">商品列表</a>
             <a class="collapse-item" href=" {{route('merchandise.picture.create')}} ">新增商品照片</a>

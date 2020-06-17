@@ -46,9 +46,11 @@ class BannerService extends Service
 
     public function getdatas()
     {
+       
         // 商業邏輯
         return $this->repo->getdatas();
     }
+    
 
 
 }

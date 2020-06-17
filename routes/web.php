@@ -57,7 +57,7 @@ Route::group(['prefix' => 'admin'], function () {
             Route::put('update/{productId}', "ProductController@update")->name("merchandise.product.update");
             Route::put('update/rank/{productId}', 'ProductController@updateRank')->name('merchandise.product.rank.update');
             Route::put('update_by_check', 'ProductController@updateByCheck')->name('merchandise.product.check.update');
-            Route::delete('delete/{productId}', "ProductController@delete")->name("merchandise.product.destory");
+            Route::delete('delete/{productId}', "ProductController@destroy")->name("merchandise.product.destory");
         });
 
           //商品類別
@@ -67,9 +67,9 @@ Route::group(['prefix' => 'admin'], function () {
             Route::post('store', "SortController@store")->name("merchandise.sort.store");
             Route::get('edit/{sortId}', "SortController@edit")->name("merchandise.sort.edit");
             Route::put('update/{sortId}', "SortController@update")->name("merchandise.sort.update");
-            Route::put('update/rank/{sortId}', 'SortController@updateRank')->name('merchandise.sort.rank.update');
-            Route::put('update_by_check', 'SortController@updateByCheck')->name('merchandise.sort.check.update');
-            Route::delete('delete/{sortId}', "SortController@delete")->name("merchandise.sort.destory");
+            // Route::put('update/rank/{sortId}', 'SortController@updateRank')->name('merchandise.sort.rank.update');
+            // Route::put('update_by_check', 'SortController@updateByCheck')->name('merchandise.sort.check.update');
+            Route::delete('delete/{sortId}', "SortController@destroy")->name("merchandise.sort.destroy");
         });
 
         //商品照片
@@ -79,9 +79,9 @@ Route::group(['prefix' => 'admin'], function () {
             Route::post('store', "PictureController@store")->name("merchandise.picture.store");
             Route::get('edit/{pictureId}', "PictureController@edit")->name("merchandise.picture.edit");
             Route::put('update/{pictureId}', "PictureController@update")->name("merchandise.picture.update");
-            Route::put('update/rank/{pictureId}', 'PictureController@updateRank')->name('merchandise.picture.rank.update');
-            Route::put('update_by_check', 'PictureController@updateByCheck')->name('merchandise.picture.check.update');
-            Route::delete('delete/{pictureId}', "PictureController@delete")->name("merchandise.picture.destory");
+            // Route::put('update/rank/{pictureId}', 'PictureController@updateRank')->name('merchandise.picture.rank.update');
+            // Route::put('update_by_check', 'PictureController@updateByCheck')->name('merchandise.picture.check.update');
+            Route::delete('delete/{pictureId}', "PictureController@destroy")->name("merchandise.picture.destory");
         });
     });
 

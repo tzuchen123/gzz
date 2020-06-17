@@ -4,7 +4,7 @@
 
 
 @section('content')
-banner list
+product list
 @if(session()->has('message'))
     <div class="alert alert-success">
         {{ session()->get('message') }}
@@ -25,12 +25,12 @@ banner list
 
 @foreach ($models as $item)
 <tr>
-    {{-- <td>
+    <td>
         @component('layouts.component.table.update-rank')
-            @slot('route', 'banner.rank.update')
+            @slot('route', 'merchandise.product.rank.update')
             @slot('model', $item)
         @endcomponent
-    </td> --}}
+    </td>
 
 
     <td>
@@ -46,21 +46,21 @@ banner list
     <td>
         {{-- <div class="custom-control custom-checkbox mb-2">
             <input model-id="{{$item->id}}" name="status" type="checkbox" class="custom-control-input status"
-                id="status{{$item->id}}" route="{{route('banner.check.update')}}" {{($item['status'])?'checked':''}}>
+                id="status{{$item->id}}" route="{{route('merchandise.product.check.update')}}" {{($item['status'])?'checked':''}}>
             <label class="custom-control-label" for="status{{$item->id}}"></label>
         </div> --}}
 
         @component('layouts.component.table.checkbox')
             @slot('model', $item)
             @slot('name', 'status')
-            @slot('route', 'banner.check.update')
+            @slot('route', 'merchandise.product.check.update')
         @endcomponent
     </td>
 
     <td>
         @component('layouts.component.table.edit')
-        @slot('edit', route('banner.edit', [$item->id]))
-        @slot('delete', route('banner.destroy', [$item->id]))
+        @slot('edit', route('merchandise.product.edit', [$item->id]))
+        @slot('delete', route('merchandise.product.destory', [$item->id]))
         @endcomponent
     </td>
 </tr>
@@ -68,7 +68,7 @@ banner list
 
 
 @endcomponent
-
+{{$models->links()}}
 
 @endsection
 

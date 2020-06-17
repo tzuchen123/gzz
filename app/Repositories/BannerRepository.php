@@ -17,11 +17,11 @@ class BannerRepository extends Repository
 
     public function getdatas()
     {
-
          // 取資料邏輯
         return $this->model
-            ->where('status', 1)
             ->orderby('rank','asc')
             ->get();
     }
+
+
 }

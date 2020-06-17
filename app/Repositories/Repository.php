@@ -147,7 +147,7 @@ abstract class Repository
   */
  public function update(array $data, $id, $attribute = "id")
  {
-
+  
   return $this->model
    ->where($attribute, '=', $id)
    ->update($data);

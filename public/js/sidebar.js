@@ -16,4 +16,4 @@
       $('#sidebar').toggleClass('active');
   });
 
-})(jQuery);
+});

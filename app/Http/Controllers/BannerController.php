@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Banner;
 use Illuminate\Http\Request;
 use App\Services\BannerService;
 
@@ -29,7 +30,7 @@ class BannerController extends Controller
 
         // 透過bannerservice抓資料，直接呼叫 Service 包裝好的 method
         $models = $this->bannerService->getdatas();
-
+    
         return view('banner.list',compact('models'));
     }
 
@@ -106,7 +107,25 @@ class BannerController extends Controller
         return redirect()->route("banner.list");
     }
 
+    public function updateRank(Request $request)
+    {
+        $this->bannerService->updateRank(
+            $request->except('_token', '_method'),
+            $request->bannerId
+        );
 
+        return redirect()->back()->with('message', '更改成功!');
+    }
+
+    public function updateByCheck(Request $request)
+    {
+       
+        $this->bannerService->updateStatus(
+            ['status' => $request->status],
+            $request->id
+        );
+        return 'success';
+    }
     // public function delete(Request $request)
     // {
 

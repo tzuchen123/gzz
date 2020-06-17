@@ -4,25 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Services\SortService;
-use App\Services\PictureService;
-use App\Services\ProductService;
 
-class ProductController extends Controller
+class SortController extends Controller
 {
-    protected $productService;
     protected $sortService;
-    protected $pictureService;
+ 
 
     // 透過 DI 注入 Service
-    public function __construct(
-        ProductService $productService,
-        SortService $sortService,
-        PictureService $pictureService
-    )
+    public function __construct(SortService $sortService)
     {
-        $this->productService = $productService;
         $this->sortService = $sortService;
-        $this->pictureService = $pictureService;
 
     }
 
@@ -35,12 +26,10 @@ class ProductController extends Controller
     public function index()
     {
 
-        // 透過productservice抓資料，直接呼叫 Service 包裝好的 method
-        $models = $this->productService->getdatas();
-       
-    
+        // 透過sortservice抓資料，直接呼叫 Service 包裝好的 method
+        $models = $this->sortService->all();
 
-        return view('merchandise.product.list',compact('models'));
+        return view('merchandise.sort.list',compact('models'));
     }
 
     /**
@@ -50,11 +39,10 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $model = $this->productService->new();
-        $sorts = $this->sortService->all();
-        $action = route('merchandise.product.store');
+        $model = $this->sortService->new();
+        $action = route('merchandise.sort.store');
 
-        return view('merchandise.product.form',compact('model','action','sorts'));
+        return view('merchandise.sort.form',compact('model','action'));
     }
 
     /**
@@ -66,12 +54,12 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         // dd($request->all());
-        $this->productService->create(
+        $this->sortService->create(
             $request->except("_token") //排除_token
 
         );
 
-        return redirect()->route("merchandise.product.list");
+        return redirect()->route("merchandise.sort.list");
     }
 
     /**
@@ -94,11 +82,11 @@ class ProductController extends Controller
     public function edit(Request $request)
     {
 
-        $model = $this->productService->findById($request->productId);
-        $action = route('merchandise.product.update',[$request->productId]);
-        $sorts = $this->sortService->all();
+        $model = $this->sortService->findById($request->sortId);
 
-        return view('merchandise.product.form',compact('model','action','sorts'));
+        $action = route('merchandise.sort.update',[$request->sortId]);
+
+        return view('merchandise.sort.form',compact('model','action'));
     }
 
     /**
@@ -110,37 +98,19 @@ class ProductController extends Controller
      */
     public function update(Request $request)
     {
-        $this->productService->update(
+        $this->sortService->update(
             $request->except("_token", "_method"), //排除_token
-            $request->productId
+            $request->sortId
         );
-        return redirect()->route("merchandise.product.list");
+        return redirect()->route("merchandise.sort.list");
     }
 
-    public function updateRank(Request $request)
-    {
-        $this->productService->updateRank(
-            $request->except('_token', '_method'),
-            $request->productId
-        );
 
-        return redirect()->back()->with('message', '更改成功!');
-    }
-
-    public function updateByCheck(Request $request)
-    {
-       
-        $this->productService->updateStatus(
-            ['status' => $request->status],
-            $request->id
-        );
-        return 'success';
-    }
     // public function delete(Request $request)
     // {
 
-    //      $this->productService->delete(
-    //         $request->productId
+    //      $this->sortService->delete(
+    //         $request->bannerId
     //     );
     //     //request->all()全部，except排除，only只送某幾個
     //     return redirect()->back()->with("sucess", "刪除成功");
@@ -154,10 +124,11 @@ class ProductController extends Controller
      */
     public function destroy(Request $request)
     {
-        $this->productService->destroy(
-            $request->productId
+        $this->sortService->destroy(
+            $request->sortId
         );
         //request->all()全部，except排除，only只送某幾個
+   
         return redirect()->back()->with("message", "刪除成功");
     }
 }
