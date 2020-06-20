@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Picture;
+use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use App\Services\SortService;
 use App\Services\PictureService;
@@ -34,12 +36,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-
         // 透過productservice抓資料，直接呼叫 Service 包裝好的 method
         $models = $this->productService->getdatas();
-       
-    
-
         return view('merchandise.product.list',compact('models'));
     }
 
@@ -51,10 +49,11 @@ class ProductController extends Controller
     public function create()
     {
         $model = $this->productService->new();
+        $pictures = $this->pictureService->new();
         $sorts = $this->sortService->all();
         $action = route('merchandise.product.store');
 
-        return view('merchandise.product.form',compact('model','action','sorts'));
+        return view('merchandise.product.form',compact('model','action','sorts','pictures'));
     }
 
     /**
@@ -65,11 +64,18 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
-        $this->productService->create(
-            $request->except("_token") //排除_token
-
+        //存輪播圖片以外的
+        $model = $this->productService->create(
+                    $request->except("_token",'picture')
+                );
+ 
+        //存輪播圖片
+        $data = $request->only("picture");
+        $data = Arr::add($data, 'productId', $model->id);
+        $this->pictureService->create(
+            $data
         );
+
 
         return redirect()->route("merchandise.product.list");
     }
@@ -95,10 +101,16 @@ class ProductController extends Controller
     {
 
         $model = $this->productService->findById($request->productId);
+
+        $pictures = $this->pictureService->new();
+        $oldPictures = $this->pictureService->getDatasByProductId($request->productId);
+    
+        $sorts = $this->sortService->all();
+
         $action = route('merchandise.product.update',[$request->productId]);
         $sorts = $this->sortService->all();
 
-        return view('merchandise.product.form',compact('model','action','sorts'));
+        return view('merchandise.product.edit',compact('model','action','sorts','pictures','oldPictures'));
     }
 
     /**
@@ -110,11 +122,21 @@ class ProductController extends Controller
      */
     public function update(Request $request)
     {
+       
         $this->productService->update(
-            $request->except("_token", "_method"), //排除_token
+            $request->except("_token", "_method",'picture'), //排除_token
             $request->productId
         );
+
+          //存輪播圖片
+          $data = $request->only("picture");
+          $data = Arr::add($data, 'productId', $request->productId);
+          $this->pictureService->create(
+              $data
+          );
+
         return redirect()->route("merchandise.product.list");
+
     }
 
     public function updateRank(Request $request)
@@ -160,4 +182,18 @@ class ProductController extends Controller
         //request->all()全部，except排除，only只送某幾個
         return redirect()->back()->with("message", "刪除成功");
     }
+
+    public function deletePicture(Request $request)
+    {
+        $this->pictureService->destroy(
+            $request->pictureId
+        );
+
+        $res = "刪除成功";
+        return $res;
+
+
+    }
+
+    
 }

@@ -72,17 +72,17 @@ Route::group(['prefix' => 'admin'], function () {
             Route::delete('delete/{sortId}', "SortController@destroy")->name("merchandise.sort.destroy");
         });
 
-        //商品照片
-        Route::group(['prefix' => 'picture'], function () {
-            Route::get('list', "PictureController@index")->name("merchandise.picture.list");
-            Route::get('create', "PictureController@create")->name("merchandise.picture.create");
-            Route::post('store', "PictureController@store")->name("merchandise.picture.store");
-            Route::get('edit/{pictureId}', "PictureController@edit")->name("merchandise.picture.edit");
-            Route::put('update/{pictureId}', "PictureController@update")->name("merchandise.picture.update");
-            // Route::put('update/rank/{pictureId}', 'PictureController@updateRank')->name('merchandise.picture.rank.update');
-            // Route::put('update_by_check', 'PictureController@updateByCheck')->name('merchandise.picture.check.update');
-            Route::delete('delete/{pictureId}', "PictureController@destroy")->name("merchandise.picture.destory");
-        });
+        // //商品照片
+        // Route::group(['prefix' => 'picture'], function () {
+        //     Route::get('list', "PictureController@index")->name("merchandise.picture.list");
+        //     Route::get('create', "PictureController@create")->name("merchandise.picture.create");
+        //     Route::post('store', "PictureController@store")->name("merchandise.picture.store");
+        //     Route::get('edit/{pictureId}', "PictureController@edit")->name("merchandise.picture.edit");
+        //     Route::put('update/{pictureId}', "PictureController@update")->name("merchandise.picture.update");
+        //     Route::put('update/rank/{pictureId}', 'PictureController@updateRank')->name('merchandise.picture.rank.update');
+        //     Route::put('update_by_check', 'PictureController@updateByCheck')->name('merchandise.picture.check.update');
+        //     Route::delete('delete/{pictureId}', "PictureController@destroy")->name("merchandise.picture.destory");
+        // });
     });
 
     //blog
@@ -128,6 +128,8 @@ Route::group(['prefix' => 'admin'], function () {
 
 });
 
+//ajax
+Route::POST('/delete/picture', "ProductController@deletePicture");
 
 
 Route::get('/test', function () {

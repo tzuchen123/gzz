@@ -1,8 +1,33 @@
 @extends('layouts.main')
 
+@section('css')
+<style>
+  .oldPictures {
+    display: flex;
+    flex-wrap: wrap;
+
+
+  }
+
+  .oldPicture {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+  }
+
+  .btn-danger {
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+</style>
+@endsection
+
 @section('content')
 
-
+{{-- @foreach ($oldPictures as $oldPicture)
+    <img src="{{$oldPicture->picture}}" alt="">
+@endforeach --}}
 
 @component('layouts.component.form.form')
 
@@ -30,6 +55,20 @@
 @slot('id', 'picture')
 @slot('label', '輪播圖片')
 @endcomponent
+
+
+<div class="form-group">
+  <label for="oldPictures">原上傳照片</label>
+  <div class="oldPictures" style="width:100%; height:300px; overflow:scroll;">
+    @foreach ($oldPictures as $picture)
+    <div class="oldPicture" id='oldPicture'>
+      <img src="{{$picture->picture}}" alt="" srcset="" style="height:300px; width:50%; min-width:300px;"
+        id="{{$picture->id}}">
+      <div class="btn btn-danger" style="width:35%; height:20%;" id="{{$picture->id}}">刪除</div>
+    </div>
+    @endforeach
+  </div>
+</div>
 
 
 @component('layouts.component.form.dropdown')
@@ -97,18 +136,18 @@ $.ajaxSetup({
 
   $("body").delegate(".btn-danger", "click", function(){
   // $('#old_img_inside').on('click','.btn-danger',function(){
-  var newsPicId = $(this).attr('id');
-
+  var pictureId = $(this).attr('id');
+    console.log(pictureId);
   var msg = "此一動作會刪除資料庫中的圖片！\n請問是否刪除？";
   if (confirm(msg)==true){
   $.ajax({
     type:'POST',
-    url:'/newsPic/delete',
-    data:{newsPicId:newsPicId 
+    url:'/delete/picture',
+    data:{pictureId:pictureId 
         },
     success:function(res){
       console.log(res);
-      $(".old_img").load(location.href + " .old_img");
+      $(".oldPictures").load(location.href + " .oldPictures");
     }
   });
   }

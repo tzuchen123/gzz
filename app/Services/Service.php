@@ -14,7 +14,7 @@ abstract class Service
         return $this->repo->all();
     }
 
-    public function paginate(Array $queries = [], $pp = 15, $with = [], $order = 'desc', $columns = ['*'])
+    public function paginate(array $queries = [], $pp = 15, $with = [], $order = 'desc', $columns = ['*'])
     {
         return $this->repo->paginate($queries, $pp, $with, $order, $columns);
     }
@@ -34,7 +34,7 @@ abstract class Service
     {
         $model = $this->repo->findOrFail($id, $with);
 
-        if($model->status != 1) {
+        if ($model->status != 1) {
             abort(404);
         }
         return $model;
@@ -47,29 +47,26 @@ abstract class Service
     public function uploadImage(&$data, $name, $folderName, $width, &$model = null)
     {
         // return data, if data not contain img
-        if(!isset($data[$name])){
+        if (!isset($data[$name])) {
             return $data;
         }
 
 
-        if(is_null($model)) {
+        if (is_null($model)) {
             $data[$name] = $this->imageHandlerService->save($data[$name], $folderName, $width)['path'];
-
         } else {
             $data[$name] = $this->imageHandlerService->save($data[$name], $folderName, $width, $model[$name])['path'];
             $model[$name] = $data[$name];
-
         }
-
         return $data;
     }
 
     public function updateRank($data, $id)
     {
-        if(is_null($data['rank'])) {
+        if (is_null($data['rank'])) {
             $data['rank'] = 1;
         }
-        if($data['rank'] < 0) {
+        if ($data['rank'] < 0) {
             $data['rank'] = 1;
         }
 
@@ -87,7 +84,7 @@ abstract class Service
     public function translationSave($data, &$model, $locale = 'zh-TW')
     {
 
-        foreach($data as $k => $value) {
+        foreach ($data as $k => $value) {
             $model->{"$k:$locale"} = $data[$k];
         }
         $model->save();
@@ -107,7 +104,6 @@ abstract class Service
         $model = $this->repo->find($modelId);
 
         return $model->deleteTranslations($locale);
-
     }
 
     public function giveIdForImageInText($content, $id)
@@ -125,7 +121,7 @@ abstract class Service
     }
 
 
-    public function delete($id, Array $imgs = [])
+    public function delete($id, array $imgs = [])
     {
         $model = $this->repo->find($id);
 
@@ -135,24 +131,23 @@ abstract class Service
                 $this->imageHandlerService->delete($model[$img]);
             }
         }
-
+       
         return $this->repo->delete($id);
 
     }
 
-    public function destroy($id, Array $imgs = [])
+    public function destroy($id, array $imgs = [])
     {
         $model = $this->repo->find($id);
 
         // 刪除圖片
-        if(count($imgs) != 0) {
+        if (count($imgs) != 0) {
             foreach ($imgs as $img) {
                 $this->imageHandlerService->destroy($model[$img]);
             }
         }
 
         return $this->repo->destroy($id);
-
     }
 
 
@@ -170,9 +165,9 @@ abstract class Service
     public function uploadAllImageInData(&$data, $folderName, $model = null, $width = 2048)
     {
         foreach ($data as $key => $value) {
-            if(!is_array($data[$key])) {
-                if(is_file($data[$key])) {
-                    if(is_null($model)) {
+            if (!is_array($data[$key])) {
+                if (is_file($data[$key])) {
+                    if (is_null($model)) {
                         $data = $this->uploadImage($data, $key, $folderName, $width);
                     } else {
                         $data = $this->uploadImage($data, $key, $folderName, $width, $model);
@@ -185,22 +180,22 @@ abstract class Service
     }
 
 
-    public function getNonTransData($data, Array $fields)
+    public function getNonTransData($data, array $fields)
     {
 
         foreach ($data as $key => $value) {
-            if(!in_array($key, $fields)) {
+            if (!in_array($key, $fields)) {
                 unset($data[$key]);
             }
         }
         return $data;
     }
 
-    public function getTransData($data, Array $fields)
+    public function getTransData($data, array $fields)
     {
 
         foreach ($data as $key => $value) {
-            if(!in_array($key, $fields)) {
+            if (!in_array($key, $fields)) {
                 unset($data[$key]);
             }
         }
@@ -208,62 +203,58 @@ abstract class Service
     }
 
 
-    public function covertToJson(&$data, Array $fields)
+    public function covertToJson(&$data, array $fields)
     {
         foreach ($fields as $key => $field) {
-            if(!array_key_exists($field, $data)) {
+            if (!array_key_exists($field, $data)) {
                 $data[$field] = [];
             }
             $data[$field] = json_encode($data[$field]);
-
         }
 
         return $data;
     }
 
-    public function allByOrder(Array $queries = [], $with = [])
+    public function allByOrder(array $queries = [], $with = [])
     {
         return $this->repo->allByOrder($queries, $with);
     }
 
     public function checkNext($id)
     {
-        $nextId = $id+1;
+        $nextId = $id + 1;
 
         $location = $this->repo->find($nextId);
 
         if ($location == null) {
             return null;
-        }
-        else{
+        } else {
             return  $nextId;
         }
     }
 
     public function checkPrevious($id)
     {
-        $nextId = $id-1;
+        $nextId = $id - 1;
 
         $location = $this->repo->find($nextId);
 
         if ($location == null) {
             return null;
-        }
-        else{
+        } else {
             return  $nextId;
         }
     }
 
     public function checkLast($id)
     {
-        $lastId = $id-1;
+        $lastId = $id - 1;
 
         $location = $this->repo->find($lastId);
 
         if ($location == null) {
             return null;
-        }
-        else{
+        } else {
             return  $lastId;
         }
     }
@@ -285,28 +276,28 @@ abstract class Service
         return $this->repo->getAll();
     }
 
-    public function uploadVideo($data,$id)
+    public function uploadVideo($data, $id)
     {
 
         // 取得檔案
-        $file = Arr::get($data,'video');
+        $file = Arr::get($data, 'video');
 
         // 抓檔名
         $filename = $file->getClientOriginalName();
 
 
         // 生成路徑
-        $path = public_path('storage').'/uploads/';
+        $path = public_path('storage') . '/uploads/';
 
         // 移動檔案
         $file->move($path, $filename);
 
         //回傳路徑
-        $path = '/storage/uploads/'.$filename;
+        $path = '/storage/uploads/' . $filename;
         $data = ['video' => $path];
 
         // 把檔案路徑存到DB
-        $this->repo->update($data,$id);
+        $this->repo->update($data, $id);
 
         return $path;
     }

@@ -3,18 +3,29 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Services\SortService;
+use App\Services\PictureService;
+use App\Services\ProductService;
 
 class PictureController extends Controller
 {
-    protected $bannerService;
-    protected $imageHandlerService;
+    protected $productService;
+    protected $sortService;
+    protected $pictureService;
 
     // 透過 DI 注入 Service
-    public function __construct(Service $bannerService)
+    public function __construct(
+        ProductService $productService,
+        SortService $sortService,
+        PictureService $pictureService
+    )
     {
-        $this->bannerService = $bannerService;
+        $this->productService = $productService;
+        $this->sortService = $sortService;
+        $this->pictureService = $pictureService;
 
     }
+
 
 
     /**
@@ -24,11 +35,9 @@ class PictureController extends Controller
      */
     public function index()
     {
-
-        // 透過bannerservice抓資料，直接呼叫 Service 包裝好的 method
-        $models = $this->bannerService->getdatas();
-
-        return view('banner.list',compact('models'));
+        // 透過pictureservice抓資料，直接呼叫 Service 包裝好的 method
+        $models = $this->pictureService->all();
+        return view('merchandise.picture.list',compact('models'));
     }
 
     /**
@@ -38,10 +47,11 @@ class PictureController extends Controller
      */
     public function create()
     {
-        $model = $this->bannerService->new();
-        $action = route('banner.store');
+        $model = $this->pictureService->new();
+        $product = $this->pictureService->new();
+        $action = route('merchandise.picture.store');
 
-        return view('banner.form',compact('model','action'));
+        return view('merchandise.picture.form',compact('model','action'));
     }
 
     /**
@@ -53,7 +63,7 @@ class PictureController extends Controller
     public function store(Request $request)
     {
         // dd($request->all());
-        $this->bannerService->create(
+        $this->pictureService->create(
             $request->except("_token") //排除_token
 
         );
@@ -81,11 +91,11 @@ class PictureController extends Controller
     public function edit(Request $request)
     {
 
-        $model = $this->bannerService->findById($request->bannerId);
+        $model = $this->pictureService->findById($request->pictureId);
 
-        $action = route('banner.update',[$request->bannerId]);
+        $action = route('merchandise.picture.update',[$request->pictureId]);
 
-        return view('banner.form',compact('model','action'));
+        return view('merchandise.picture.form',compact('model','action'));
     }
 
     /**
@@ -97,19 +107,19 @@ class PictureController extends Controller
      */
     public function update(Request $request)
     {
-        $this->bannerService->update(
+        $this->pictureService->update(
             $request->except("_token", "_method"), //排除_token
-            $request->bannerId
+            $request->pictureId
         );
-        return redirect()->route("banner.list");
+        return redirect()->route("merchandise.picture.list");
     }
 
 
     // public function delete(Request $request)
     // {
 
-    //      $this->bannerService->delete(
-    //         $request->bannerId
+    //      $this->pictureService->delete(
+    //         $request->pictureId
     //     );
     //     //request->all()全部，except排除，only只送某幾個
     //     return redirect()->back()->with("sucess", "刪除成功");
@@ -123,8 +133,8 @@ class PictureController extends Controller
      */
     public function destroy(Request $request)
     {
-        $this->bannerService->destroy(
-            $request->bannerId
+        $this->pictureService->destroy(
+            $request->pictureId
         );
         //request->all()全部，except排除，only只送某幾個
         return redirect()->back()->with("sucess", "刪除成功");

@@ -26,8 +26,8 @@ class ProductService extends Service
     public function create($data)
     {
 
-        $data = $this->uploadAllImageInData($data, "banner");
-
+        $data = $this->uploadAllImageInData($data, "product");
+      
         $model = $this->repo->create($data);
 
         return $model;
@@ -35,10 +35,9 @@ class ProductService extends Service
 
     public function update($data,$id)
     {
-        // dd($model);
-        // dd($data);
-        $data = $this->uploadAllImageInData($data, "banner");
-
+       
+        $data = $this->uploadAllImageInData($data, "product");
+       
         $model = $this->repo->update($data,$id);
 
         return $model;
