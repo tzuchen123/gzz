@@ -29,18 +29,28 @@
             @slot('title', '文章管理')
             <a class="collapse-item" href=" {{route('blog.tag.create')}} ">新增標籤</a>
             <a class="collapse-item" href=" {{route('blog.tag.list')}} ">標籤列表</a>
-            <a class="collapse-item" href=" {{route('blog.catagory.list')}} ">新增分類</a>
+            <a class="collapse-item" href=" {{route('blog.catagory.create')}} ">新增分類</a>
             <a class="collapse-item" href=" {{route('blog.catagory.list')}} ">分類列表</a>
-            <a class="collapse-item" href=" {{route('blog.article.list')}} ">新增文章</a>
+            <a class="collapse-item" href=" {{route('blog.article.create')}} ">新增文章</a>
             <a class="collapse-item" href=" {{route('blog.article.list')}} ">文章列表</a>
         @endcomponent
 
+        {{-- @component('layouts.component.sidebar.item')
+        @slot('name', 'order')
+        @slot('title', '訂單管理')
+        <a class="collapse-item" href=" {{route('blog.article.list')}} ">訂單列表</a>
+        <a class="collapse-item" href=" {{route('blog.article.list')}} ">已寄出訂單</a>
+        <a class="collapse-item" href=" {{route('blog.article.list')}} ">已付款訂單</a>
+        <a class="collapse-item" href=" {{route('blog.article.list')}} ">未付款訂單</a>
+        @endcomponent
 
+         --}}
+        
 
            
         </ul>
 
-        <div class="footer">
+        {{-- <div class="footer">
             <p>
                 <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                 Copyright &copy;<script>
@@ -49,7 +59,7 @@
                     aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib.com</a>
                 <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
             </p>
-        </div>
+        </div> --}}
 
     </div>
 </nav>

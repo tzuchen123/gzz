@@ -73,6 +73,7 @@ abstract class Repository
 
     public function all(string $sort = 'desc', array $with = [])
  {
+  
         return $this->model
                     ->with($with)
                     ->orderBy('created_at', $sort)

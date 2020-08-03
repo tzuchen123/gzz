@@ -4,6 +4,11 @@
 
 
 @section('content')
+
+<a href="{{ route('merchandise.product.create')}}"><button type="button" class="btn btn-secondary">新增商品</button></a>
+<br>
+
+
 product list
 @if(session()->has('message'))
     <div class="alert alert-success">
@@ -60,7 +65,7 @@ product list
     <td>
         @component('layouts.component.table.edit')
         @slot('edit', route('merchandise.product.edit', [$item->id]))
-        @slot('delete', route('merchandise.product.destory', [$item->id]))
+        @slot('delete', route('merchandise.product.destroy', [$item->id]))
         @endcomponent
     </td>
 </tr>

@@ -4,6 +4,10 @@
 
 
 @section('content')
+<a href="{{ route('banner.create')}}"><button type="button" class="btn btn-secondary">新增banner</button></a>
+<br>
+
+
 banner list
 @if(session()->has('message'))
     <div class="alert alert-success">
@@ -25,12 +29,12 @@ banner list
 
 @foreach ($models as $item)
 <tr>
-    {{-- <td>
+    <td>
         @component('layouts.component.table.update-rank')
             @slot('route', 'banner.rank.update')
             @slot('model', $item)
         @endcomponent
-    </td> --}}
+    </td>
 
 
     <td>

@@ -10,7 +10,7 @@ class SortService extends Service
 {
     protected $repo;
     protected $imageHandlerService;
-    protected $savingData = ["title"];
+    protected $savingData = ["title",'subtitle','solgan','image'];
 
     // 透過 DI 注入 Service
     public function __construct(
@@ -25,7 +25,7 @@ class SortService extends Service
     public function create($data)
     {
 
-        $data = $this->uploadAllImageInData($data, "banner");
+        $data = $this->uploadAllImageInData($data, "sort");
 
         $model = $this->repo->create($data);
 
@@ -36,7 +36,7 @@ class SortService extends Service
     {
         // dd($model);
         // dd($data);
-        $data = $this->uploadAllImageInData($data, "banner");
+        $data = $this->uploadAllImageInData($data, "sort");
 
         $model = $this->repo->update($data,$id);
 

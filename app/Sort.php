@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Sort extends Model
 {
-    protected $fillable = ['title'];
+    protected $fillable = ['title','subtitle','solgan','image'];
 
     public function products()
     {

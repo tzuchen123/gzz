@@ -10,7 +10,7 @@ class BannerService extends Service
 {
     protected $repo;
     protected $imageHandlerService;
-    protected $savingData = ["title"];
+    // protected $savingData = ["title"];
 
     // 透過 DI 注入 Service
     public function __construct(
