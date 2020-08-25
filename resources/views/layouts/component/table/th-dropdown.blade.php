@@ -1,4 +1,4 @@
-{{-- <div class="dropdown">
+<div class="dropdown">
     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       Dropdown button
     </button>
@@ -9,8 +9,8 @@
     </div>
   </div>
   
-   --}}
-<th scope="col" width="{{$width ?? ''}}">
+  
+{{-- <th scope="col" width="{{$width ?? ''}}">
     <select id="{{$id}}" name="{{$name}}" class="form-control">
  
         <option value="">--- 選擇 {{$label}} ---</option>
@@ -19,4 +19,4 @@
         <option value="{{ $item->id }}" {{ $model->$name == $item->id ? 'selected' : ''}}>{{ $item->title }}</option>
         @endforeach
       </select>
-</th>
+</th> --}}

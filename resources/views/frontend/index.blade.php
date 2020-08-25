@@ -31,18 +31,21 @@
             </div>
             <div class="row">
                 @foreach ($sorts as $sort)
-                <div class="col-xl-4 col-lg-6" >
-                    <div class="single-category mb-30">
-                        <div class="category-img">
-                            <img src="{{$sort->image}}" alt="" style="height:250px;">
-                            <div class="category-caption">
-                                <h2>{{$sort->title}}</h2>
-                                <span class="best"><a href="#">{{$sort->subtitle}}</a></span>
-                                <span class="collection">{{$sort->solgan}}</span>
+                <a href="{{ route('frontend.product.index',[$sort->id]) }}">
+                    <div class="col-xl-4 col-lg-6">
+                        <div class="single-category mb-30">
+                            <div class="category-img">
+                                <img src="{{$sort->image}}" alt="" style="height:250px;">
+                                <div class="category-caption">
+                                    <h2>{{$sort->title}}</h2>
+                                    <span class="best"><a href="#">{{$sort->subtitle}}</a></span>
+                                    <span class="collection">{{$sort->solgan}}</span>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                </a>
+
                 @endforeach
 
                 {{-- <div class="col-xl-4 col-lg-6">
@@ -80,7 +83,7 @@
                 <!-- Section Tittle -->
                 <div class="col-xl-4 col-lg-5 col-md-5">
                     <div class="section-tittle mb-30">
-                        <h2>All Products</h2>
+                        <h2>Hot Products</h2>
                     </div>
                 </div>
 
@@ -90,28 +93,25 @@
                 <!-- card one -->
                 <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
                     <div class="row">
+
+                        @foreach ($hotProducts as $product)
+
                         <div class="col-xl-4 col-lg-4 col-md-6">
-                            <div class="single-product mb-60">
-                                <div class="product-img">
-                                    <img src="/frontend/assets/img/categori/product1.png" alt="">
-                                    {{-- @isset($product->hot == '1')
-                                    <div class="new-product">
-                                        <span>Hot</span>
+                            <a href="{{ route('frontend.product.detail',[$product->id]) }}">
+                                <div class="single-product">
+                                    <div class="product-img" style="">
+                                        <img src="{{$product->image}}" alt="">
                                     </div>
-                                    @endisset
-                                    --}}
-                                </div>
-                                <div class="product-caption">
-                                    <h4><a href="#">Green Dress with details</a></h4>
-                                    <div class="price">
-                                        <ul>
-                                            <li>$40.00</li>
-                                            <li class="discount">$60.00</li>
-                                        </ul>
+                                    <div class="product-caption">
+                                        <h4 style="color: black;">{{$product->title}}</h4>
+                                        <p> {{$product->price}}元</p>
                                     </div>
                                 </div>
-                            </div>
+                            </a>
                         </div>
+
+                        @endforeach
+
                     </div>
                 </div>
 

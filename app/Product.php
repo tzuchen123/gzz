@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
-    protected $fillable = ['title','image','rank','status','sort_id','pic1','pic2','pic3'];
+    protected $fillable = ['title','image','rank','status','sort_id','price','amount'];
 
     public function pictures()
     {
@@ -16,7 +16,7 @@ class Product extends Model
 
     public function sort()
     {
-        return $this->belongsTo('App\Sort','sort_id');
+        return $this->belongsTo('App\Sort');
         // return $this->belongsTo('App\Post', 'foreign_key');
     }
 

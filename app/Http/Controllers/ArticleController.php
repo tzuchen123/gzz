@@ -34,7 +34,7 @@ class ArticleController extends Controller
     public function index()
     {
         // 透過articleservice抓資料，直接呼叫 Service 包裝好的 method
-        $models = $this->articleService->getdatas();
+        $models = $this->articleService->getDatas();
         return view('blog.article.list', compact('models'));
     }
 

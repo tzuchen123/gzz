@@ -11,7 +11,7 @@ class ProductService extends Service
 {
     protected $repo;
     protected $imageHandlerService;
-    protected $savingData = ["title"];
+    // protected $savingData = ["title"];
 
     // 透過 DI 注入 Service
     public function __construct(
@@ -44,11 +44,25 @@ class ProductService extends Service
     }
 
 
-    public function getdatas()
+    public function getDatas()
     {
        
         // 商業邏輯
-        return $this->repo->getdatas();
+        return $this->repo->getDatas();
+    }
+
+    
+    public function getDatasBySort($sortId)
+    {
+        // 商業邏輯
+        return $this->repo->getDatasBySort($sortId);
+    }
+
+    public function getHotDatas()
+    {
+       
+        // 商業邏輯
+        return $this->repo->getHotDatas();
     }
     
 

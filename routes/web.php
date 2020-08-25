@@ -20,12 +20,27 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 Route::get('/', 'IndexController@index')->name('frontend.index');
-Route::get('/product', 'IndexController@product')->name('frontend.product');
+
+//商品頁
+Route::get('/merchandise/{sortId}', 'IndexController@merchandise')->name('frontend.product.index');
+Route::get('/product/{productId}', 'IndexController@product')->name('frontend.product.detail');
+
 Route::get('/blog', 'IndexController@blog')->name('frontend.blog');
+
 Route::get('/contact', 'IndexController@contact')->name('frontend.contact');
 
+//結帳
+Route::get('/cart', 'CartController@cart')->name('frontend.cart.cart');
+//ajax
+Route::post('/addItemToCart', 'CartController@addItemToCart');
+Route::post('/updateQuantity', 'CartController@updateQuantity');
+Route::post('/deleteItemInCart', 'CartController@deleteItemInCart');
+
+Route::get('/checkout', 'CartController@checkout')->name('frontend.cart.checkout');
+Route::get('/confirmation', 'CartController@confirmation')->name('frontend.cart.confirmation');
 
 
+ 
 // Route::prefix('admin')->middleware(['auth'])->group(function () {
 //     Route::get('/', 'AdminController@index')->name('admin.dashboard');
 
@@ -75,17 +90,17 @@ Route::group(['prefix' => 'admin'], function () {
             Route::delete('delete/{sortId}', "SortController@destroy")->name("merchandise.sort.destroy");
         });
 
-        // //商品照片
-        // Route::group(['prefix' => 'picture'], function () {
-        //     Route::get('list', "PictureController@index")->name("merchandise.picture.list");
-        //     Route::get('create', "PictureController@create")->name("merchandise.picture.create");
-        //     Route::post('store', "PictureController@store")->name("merchandise.picture.store");
-        //     Route::get('edit/{pictureId}', "PictureController@edit")->name("merchandise.picture.edit");
-        //     Route::put('update/{pictureId}', "PictureController@update")->name("merchandise.picture.update");
-        //     Route::put('update/rank/{pictureId}', 'PictureController@updateRank')->name('merchandise.picture.rank.update');
-        //     Route::put('update_by_check', 'PictureController@updateByCheck')->name('merchandise.picture.check.update');
-        //     Route::delete('delete/{pictureId}', "PictureController@destroy")->name("merchandise.picture.destroy");
-        // });
+        //商品照片
+        Route::group(['prefix' => 'picture'], function () {
+            Route::get('list', "PictureController@index")->name("merchandise.picture.list");
+            Route::get('create', "PictureController@create")->name("merchandise.picture.create");
+            Route::post('store', "PictureController@store")->name("merchandise.picture.store");
+            Route::get('edit/{pictureId}', "PictureController@edit")->name("merchandise.picture.edit");
+            Route::put('update/{pictureId}', "PictureController@update")->name("merchandise.picture.update");
+            Route::put('update/rank/{pictureId}', 'PictureController@updateRank')->name('merchandise.picture.rank.update');
+            Route::put('update_by_check', 'PictureController@updateByCheck')->name('merchandise.picture.check.update');
+            Route::delete('delete/{pictureId}', "PictureController@destroy")->name("merchandise.picture.destroy");
+        });
     });
 
     //blog
@@ -130,7 +145,7 @@ Route::group(['prefix' => 'admin'], function () {
 
      //mail
      Route::group(['prefix' => 'mail'], function () {
-        Route::get('list', "MailController@index")->name("mail.list");
+          
         Route::get('create', "MailController@create")->name("mail.create");
         Route::post('store', "MailController@store")->name("mail.store");
         Route::get('edit/{mailId}', "MailController@edit")->name("mail.edit");
@@ -147,6 +162,4 @@ Route::group(['prefix' => 'admin'], function () {
 Route::POST('/delete/picture', "ProductController@deletePicture");
 
 
-Route::get('/test', function () {
-    return view('test');
-});
+Route::get('/test', "TestController@index");

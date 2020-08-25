@@ -44,10 +44,10 @@ class SortService extends Service
     }
 
 
-    public function getdatas()
+    public function getDatas()
     {
         // 商業邏輯
-        return $this->repo->getdatas();
+        return $this->repo->getDatas();
     }
 
 }

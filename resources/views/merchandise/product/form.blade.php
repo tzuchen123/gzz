@@ -17,6 +17,21 @@
 @slot('label', '標題')
 @endcomponent
 
+@component('layouts.component.form.input')
+@slot('model', $model)
+@slot('name', 'price')
+@slot('id', 'price')
+@slot('label', '價格')
+@endcomponent
+
+@component('layouts.component.form.input')
+@slot('model', $model)
+@slot('name', 'amount')
+@slot('id', 'amount')
+@slot('label', '數量')
+@endcomponent
+
+
 @component('layouts.component.form.image')
 @slot('model', $model)
 @slot('name', 'image')

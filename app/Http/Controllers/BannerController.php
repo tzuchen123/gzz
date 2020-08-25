@@ -29,7 +29,7 @@ class BannerController extends Controller
     {
 
         // 透過bannerservice抓資料，直接呼叫 Service 包裝好的 method
-        $models = $this->bannerService->getdatas();
+        $models = $this->bannerService->getDatas();
     
         return view('banner.list',compact('models'));
     }

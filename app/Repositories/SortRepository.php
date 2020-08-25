@@ -14,7 +14,7 @@ class SortRepository extends Repository
          $this->model = $model;
     }
 
-    public function getdatas()
+    public function getDatas()
     {
 
          // 取資料邏輯

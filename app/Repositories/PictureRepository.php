@@ -14,4 +14,11 @@ class PictureRepository extends Repository
     {
          $this->model = $model;
     }
+
+    public function getDatas($id)
+    {
+         // 取資料邏輯
+        return $this->model->where('product_id','=',$id)->get();
+    }
+    
 }

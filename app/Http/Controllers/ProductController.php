@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Picture;
+use App\Product;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use App\Services\SortService;
@@ -20,12 +21,10 @@ class ProductController extends Controller
         ProductService $productService,
         SortService $sortService,
         PictureService $pictureService
-    )
-    {
+    ) {
         $this->productService = $productService;
         $this->sortService = $sortService;
         $this->pictureService = $pictureService;
-
     }
 
 
@@ -37,8 +36,13 @@ class ProductController extends Controller
     public function index()
     {
         // 透過productservice抓資料，直接呼叫 Service 包裝好的 method
-        $models = $this->productService->getdatas();
-        return view('merchandise.product.list',compact('models'));
+        $models = $this->productService->getDatas();
+
+        // foreach ($models as $item) {
+        //     dd($item->sort->id);
+        // }
+
+        return view('merchandise.product.list', compact('models'));
     }
 
     /**
@@ -53,7 +57,7 @@ class ProductController extends Controller
         $sorts = $this->sortService->all();
         $action = route('merchandise.product.store');
 
-        return view('merchandise.product.form',compact('model','action','sorts','pictures'));
+        return view('merchandise.product.form', compact('model', 'action', 'sorts', 'pictures'));
     }
 
     /**
@@ -66,9 +70,9 @@ class ProductController extends Controller
     {
         //存輪播圖片以外的
         $model = $this->productService->create(
-                    $request->except("_token",'picture')
-                );
- 
+            $request->except("_token", 'picture')
+        );
+
         //存輪播圖片
         $data = $request->only("picture");
         $data = Arr::add($data, 'productId', $model->id);
@@ -103,14 +107,13 @@ class ProductController extends Controller
         $model = $this->productService->findById($request->productId);
 
         $pictures = $this->pictureService->new();
-        $oldPictures = $this->pictureService->getDatasByProductId($request->productId);
-    
+        $oldPictures =  $this->pictureService->getDatas($request->productId);
+
         $sorts = $this->sortService->all();
 
-        $action = route('merchandise.product.update',[$request->productId]);
-        $sorts = $this->sortService->all();
+        $action = route('merchandise.product.update', [$request->productId]);
 
-        return view('merchandise.product.edit',compact('model','action','sorts','pictures','oldPictures'));
+        return view('merchandise.product.edit', compact('model', 'action', 'sorts', 'pictures', 'oldPictures'));
     }
 
     /**
@@ -122,21 +125,20 @@ class ProductController extends Controller
      */
     public function update(Request $request)
     {
-       
+
         $this->productService->update(
-            $request->except("_token", "_method",'picture'), //排除_token
+            $request->except("_token", "_method", 'picture'), //排除_token
             $request->productId
         );
 
-          //存輪播圖片
-          $data = $request->only("picture");
-          $data = Arr::add($data, 'productId', $request->productId);
-          $this->pictureService->create(
-              $data
-          );
+        //存輪播圖片
+        $data = $request->only("picture");
+        $data = Arr::add($data, 'productId', $request->productId);
+        $this->pictureService->create(
+            $data
+        );
 
         return redirect()->route("merchandise.product.list");
-
     }
 
     public function updateRank(Request $request)
@@ -151,9 +153,11 @@ class ProductController extends Controller
 
     public function updateByCheck(Request $request)
     {
-       
         $this->productService->updateStatus(
-            ['status' => $request->status],
+            [
+                'status' => $request->status,
+                'hot' => $request->hot
+            ],
             $request->id
         );
         return 'success';
@@ -168,7 +172,7 @@ class ProductController extends Controller
     //     return redirect()->back()->with("sucess", "刪除成功");
     // }
 
-     /**
+    /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
@@ -191,9 +195,5 @@ class ProductController extends Controller
 
         $res = "刪除成功";
         return $res;
-
-
     }
-
-    
 }
