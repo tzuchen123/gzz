@@ -10,11 +10,11 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th scope="col">Product</th>
-                                <th scope="col">Price</th>
-                                <th scope="col">Quantity</th>
-                                <th scope="col">Subtotal</th>
-                                <th scope="col">Delete</th>
+                                <th scope="col">商品名稱</th>
+                                <th scope="col">價錢</th>
+                                <th scope="col">數量</th>
+                                <th scope="col">小計</th>
+                                <th scope="col">刪除商品</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -32,7 +32,7 @@
                                 </td>
 
                                 <td>
-                                    <h5>{{$content->price}}</h5>
+                                    <h5>${{$content->price}}</h5>
                                 </td>
 
                                 <td>
@@ -54,17 +54,17 @@
                                 <td></td>
                                 <td></td>
                                 <td>
-                                    <h5>Total</h5>
+                                    <h5>總計</h5>
                                 </td>
                                 <td>
-                                    <h5>{{$total}}</h5>
+                                    <h5>${{$total}}</h5>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
                     <div class="checkout_btn_inner float-right">
-                    <a class="btn" href="{{route('frontend.index')}}">Continue Shopping</a>
-                        <a class="btn checkout" href="{{route('frontend.cart.checkout')}}">Proceed to checkout</a>
+                    <a class="btn" href="{{route('frontend.index')}}">繼續選購</a>
+                        <a class="btn checkout" href="{{route('frontend.order.checkout')}}">前往結帳</a>
                     </div>
                 </div>
             </div>
@@ -86,7 +86,7 @@ $.ajaxSetup({
     }
 });
   $.ajax({
-    url: '/deleteItemInCart',                 // url位置
+    url: '/cart/deleteItemInCart',                 // url位置
     type: 'post',                                    // post/get
     data: { productId: productId,},                // 輸入的資料
     error: function (jqXHR, textStatus, errorThrown) {                         // 錯誤後執行的函數
@@ -115,7 +115,7 @@ $.ajaxSetup({
 });
 
   $.ajax({
-    url: 'updateQuantity',                        
+    url: '/cart/updateQuantity',                        
     type: 'post',                                  
     data: 
         { 

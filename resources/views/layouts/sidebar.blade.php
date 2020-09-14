@@ -19,7 +19,10 @@
             <a class="collapse-item" href=" {{route('merchandise.sort.create')}} ">新增商品分類</a>
             <a class="collapse-item" href=" {{route('merchandise.sort.list')}} ">商品分類列表</a>
             <a class="collapse-item" href=" {{route('merchandise.product.create')}} ">新增商品</a>
-            <a class="collapse-item" href=" {{route('merchandise.product.list')}} ">商品列表</a>
+            <a class="collapse-item" href=" {{route('merchandise.product.list')}} ">商品總表</a>
+            @foreach ($sorts as $sort)
+             <a class="collapse-item" href=" {{route('merchandise.product.sort.list', [$sort->id])}} ">商品列表-{{$sort->title}}</a>
+            @endforeach
             {{-- <a class="collapse-item" href=" {{route('merchandise.picture.create')}} ">新增商品照片</a>
             <a class="collapse-item" href=" {{route('merchandise.picture.list')}} ">商品照片列表</a> --}}
         @endcomponent

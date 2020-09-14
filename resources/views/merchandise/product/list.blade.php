@@ -23,11 +23,8 @@ product list
 @slot('th')
 @component('layouts.component.table.th')排序@endcomponent
 {{-- @component('layouts.component.table.th', ['width'=>'25%'])縮圖@endcomponent --}}
-{{-- @component('layouts.component.table.th-dropdown')商品分類
-    
-  
-@endcomponent --}}
-@component('layouts.component.table.th')標題@endcomponent
+{{-- @component('layouts.component.table.th')商品分類@endcomponent  --}}
+@component('layouts.component.table.th')商品名稱@endcomponent
 @component('layouts.component.table.th')價格@endcomponent
 @component('layouts.component.table.th')數量@endcomponent
 @component('layouts.component.table.th-boolean')架@endcomponent
@@ -47,14 +44,8 @@ product list
 
 
     {{-- <td>
-        @component('layouts.component.table.image')
-        @slot('image', $item->image )
-        @endcomponent
-    </td> --}}
-{{-- 
-    <td>
-        {{$item->sort}}
-    </td> --}}
+        {{$item->sort->title}}
+    </td>  --}}
 
     <td>
         {{$item->title}}

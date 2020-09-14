@@ -101,6 +101,9 @@
                                 <div class="single-product">
                                     <div class="product-img" style="">
                                         <img src="{{$product->image}}" alt="">
+                                        
+                                        {{-- faker --}}
+                                        <img src="/storage/uploads/images/product/{{$product->image}}">
                                     </div>
                                     <div class="product-caption">
                                         <h4 style="color: black;">{{$product->title}}</h4>

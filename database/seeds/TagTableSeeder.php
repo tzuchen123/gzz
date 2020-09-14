@@ -12,6 +12,8 @@ class TagTableSeeder extends Seeder
      */
     public function run()
     {
+        //truncate()清空資料表
+        DB::table('tags')->truncate();
         for ($i = 1; $i < 6; $i++) {
             DB::table('tags')->insert([
                 'title' => 'tag' . $i,

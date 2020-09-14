@@ -22,25 +22,40 @@ Auth::routes();
 Route::get('/', 'IndexController@index')->name('frontend.index');
 
 //商品頁
-Route::get('/merchandise/{sortId}', 'IndexController@merchandise')->name('frontend.product.index');
-Route::get('/product/{productId}', 'IndexController@product')->name('frontend.product.detail');
+Route::get('merchandise/{sortId}', 'IndexController@merchandise')->name('frontend.product.index');
+Route::get('product/{productId}', 'IndexController@product')->name('frontend.product.detail');
 
-Route::get('/blog', 'IndexController@blog')->name('frontend.blog');
+Route::get('blog', 'IndexController@blog')->name('frontend.blog');
 
-Route::get('/contact', 'IndexController@contact')->name('frontend.contact');
+Route::get('order', 'IndexController@order')->name('frontend.order');
+
+Route::get('contact', 'IndexController@contact')->name('frontend.contact');
+
+//購物車
+Route::group(['prefix' => 'cart'], function () {
+    Route::get('/', 'CartController@cart')->name('frontend.cart.cart');
+    //ajax
+    Route::post('addItemToCart', 'CartController@addItemToCart');
+    Route::post('updateQuantity', 'CartController@updateQuantity');
+    Route::post('deleteItemInCart', 'CartController@deleteItemInCart');
+});
 
 //結帳
-Route::get('/cart', 'CartController@cart')->name('frontend.cart.cart');
-//ajax
-Route::post('/addItemToCart', 'CartController@addItemToCart');
-Route::post('/updateQuantity', 'CartController@updateQuantity');
-Route::post('/deleteItemInCart', 'CartController@deleteItemInCart');
+Route::group(['prefix' => 'checkout'], function () {
+    Route::get('/', 'OrderController@checkout')->name('frontend.order.checkout');
+    Route::post('send', 'OrderController@sendCheckout')->name('frontend.order.sendCheckout');
+    Route::prefix('ecpay')->group(function () {
+        //當消費者付款完成後，綠界會將付款結果參數以幕後(Server POST)回傳到該網址。
+        Route::post('notify', 'OrderController@notifyUrl')->name('notify');
+        //付款完成後，綠界會將付款結果參數以幕前(Client POST)回傳到該網址
+        Route::post('return', 'OrderController@returnUrl')->name('return');
+    });
+    Route::get('confirmation', 'OrderController@confirmation')->name('frontend.order.confirmation');
+});
 
-Route::get('/checkout', 'CartController@checkout')->name('frontend.cart.checkout');
-Route::get('/confirmation', 'CartController@confirmation')->name('frontend.cart.confirmation');
 
 
- 
+
 // Route::prefix('admin')->middleware(['auth'])->group(function () {
 //     Route::get('/', 'AdminController@index')->name('admin.dashboard');
 
@@ -51,8 +66,8 @@ Route::get('/confirmation', 'CartController@confirmation')->name('frontend.cart.
 Route::group(['prefix' => 'admin'], function () {
     Route::get('', 'AdminController@index')->name('admin.dashboard');
 
-     //banner
-     Route::group(['prefix' => 'banner'], function () {
+    //banner
+    Route::group(['prefix' => 'banner'], function () {
         Route::get('list', "BannerController@index")->name("banner.list");
         Route::get('create', "BannerController@create")->name("banner.create");
         Route::post('store', "BannerController@store")->name("banner.store");
@@ -63,12 +78,13 @@ Route::group(['prefix' => 'admin'], function () {
         Route::delete('delete/{bannerId}', "BannerController@destroy")->name("banner.destroy");
     });
 
-      //商品
-      Route::group(['prefix' => 'merchandise'], function () {
+    //商品
+    Route::group(['prefix' => 'merchandise'], function () {
 
         //商品
         Route::group(['prefix' => 'product'], function () {
             Route::get('list', "ProductController@index")->name("merchandise.product.list");
+            Route::get('list/{sortId}', "ProductController@sortIndex")->name("merchandise.product.sort.list");
             Route::get('create', "ProductController@create")->name("merchandise.product.create");
             Route::post('store', "ProductController@store")->name("merchandise.product.store");
             Route::get('edit/{productId}', "ProductController@edit")->name("merchandise.product.edit");
@@ -78,8 +94,8 @@ Route::group(['prefix' => 'admin'], function () {
             Route::delete('delete/{productId}', "ProductController@destroy")->name("merchandise.product.destroy");
         });
 
-          //商品類別
-          Route::group(['prefix' => 'sort'], function () {
+        //商品類別
+        Route::group(['prefix' => 'sort'], function () {
             Route::get('list', "SortController@index")->name("merchandise.sort.list");
             Route::get('create', "SortController@create")->name("merchandise.sort.create");
             Route::post('store', "SortController@store")->name("merchandise.sort.store");
@@ -88,18 +104,6 @@ Route::group(['prefix' => 'admin'], function () {
             // Route::put('update/rank/{sortId}', 'SortController@updateRank')->name('merchandise.sort.rank.update');
             // Route::put('update_by_check', 'SortController@updateByCheck')->name('merchandise.sort.check.update');
             Route::delete('delete/{sortId}', "SortController@destroy")->name("merchandise.sort.destroy");
-        });
-
-        //商品照片
-        Route::group(['prefix' => 'picture'], function () {
-            Route::get('list', "PictureController@index")->name("merchandise.picture.list");
-            Route::get('create', "PictureController@create")->name("merchandise.picture.create");
-            Route::post('store', "PictureController@store")->name("merchandise.picture.store");
-            Route::get('edit/{pictureId}', "PictureController@edit")->name("merchandise.picture.edit");
-            Route::put('update/{pictureId}', "PictureController@update")->name("merchandise.picture.update");
-            Route::put('update/rank/{pictureId}', 'PictureController@updateRank')->name('merchandise.picture.rank.update');
-            Route::put('update_by_check', 'PictureController@updateByCheck')->name('merchandise.picture.check.update');
-            Route::delete('delete/{pictureId}', "PictureController@destroy")->name("merchandise.picture.destroy");
         });
     });
 
@@ -118,8 +122,8 @@ Route::group(['prefix' => 'admin'], function () {
             Route::delete('delete/{catagoryId}', "CatagoryController@destroy")->name("blog.catagory.destroy");
         });
 
-         //tag
-         Route::group(['prefix' => 'tag'], function () {
+        //tag
+        Route::group(['prefix' => 'tag'], function () {
             Route::get('list', "TagController@index")->name("blog.tag.list");
             Route::get('create', "TagController@create")->name("blog.tag.create");
             Route::post('store', "TagController@store")->name("blog.tag.store");
@@ -143,9 +147,9 @@ Route::group(['prefix' => 'admin'], function () {
         });
     });
 
-     //mail
-     Route::group(['prefix' => 'mail'], function () {
-          
+    //mail
+    Route::group(['prefix' => 'mail'], function () {
+
         Route::get('create', "MailController@create")->name("mail.create");
         Route::post('store', "MailController@store")->name("mail.store");
         Route::get('edit/{mailId}', "MailController@edit")->name("mail.edit");
@@ -154,8 +158,6 @@ Route::group(['prefix' => 'admin'], function () {
         Route::put('update_by_check', 'MailController@updateByCheck')->name('mail.check.update');
         Route::delete('delete/{mailId}', "MailController@destroy")->name("mail.destroy");
     });
-
-
 });
 
 //ajax

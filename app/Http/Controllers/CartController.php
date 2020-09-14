@@ -119,23 +119,7 @@ class CartController extends Controller
     }
 
 
-    public function checkout()
-    {
-        $sorts = $this->sortService->all();
-        // $content = \Cart::session($userId)->getContent()->sort();
-        // $total = \Cart::session($userId)->getTotal();
-        $content = \Cart::getContent();
-        $total = \Cart::getTotal();
-
-        return view('frontend.cart.checkout',compact('total','content','sorts'));
-    }
-
-    public function confirmation()
-    {
-        $sorts = $this->sortService->all();
-        return view('frontend.cart.confirmation');
-    }
-
+  
 
 
     

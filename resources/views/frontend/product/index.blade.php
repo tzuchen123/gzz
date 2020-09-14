@@ -35,6 +35,9 @@
                             <a href="{{route('frontend.product.detail',[$product->id])}}">
                                 <div class="single-product mb-60">
                                     <div class="product-img">
+                                        {{-- faker --}}
+                                        <img src="/storage/uploads/images/product/{{$product->image}}">
+
                                         <img src="{{$product->image}}" alt="">
                                         @if ($product->hot == '1')
                                         <div class="new-product">
@@ -46,7 +49,7 @@
                                         <h4><a href="#">{{$product->title}}</a></h4>
                                         <div class="price">
                                             <ul>
-                                                <li>{{$product->price}}</li>
+                                                <li>{{$product->price}}元</li>
                                             </ul>
                                         </div>
                                     </div>

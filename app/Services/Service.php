@@ -75,7 +75,6 @@ abstract class Service
 
     public function updateStatus($data, $id)
     {
-
         return $this->repo->update($data, $id);
     }
 

@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>eCommerce HTML-5 Template </title>
+    <title>觀自在官方網站 </title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -98,7 +98,6 @@
                                 <div class="main-menu f-right d-none d-lg-block">
                                     <nav>
                                         <ul id="navigation">
-                                            <li><a href="{{route('frontend.index')}}">首頁</a></li>
                                             {{-- <li><a href="Catagori.html">Catagori</a></li> --}}
                                             <li class="hot"><a href="#">產品</a>
                                                 <ul class="submenu">
@@ -127,8 +126,9 @@
                                                 </ul>
                                             </li> --}}
                                             <li><a href="{{route('frontend.contact')}}">聯絡我們</a></li>
+                                            <li><a href="{{route('frontend.order')}}">訂單查詢</a></li>
                                         </ul>
-                                    </nav>
+                                    </nav> 
                                 </div>
                             </div>
                             <div class="col-xl-5 col-lg-3 col-md-3 col-sm-3 fix-card">
@@ -141,17 +141,17 @@
                                             </div>
                                         </div>
                                      </li> --}}
-                                    <li class=" d-none d-xl-block">
+                                    {{-- <li class=" d-none d-xl-block">
                                         <div class="favorit-items">
                                             <i class="far fa-heart"></i>
                                         </div>
-                                    </li>
+                                    </li> --}}
                                     <li>
                                         <div class="shopping-card">
                                             <a href="/cart"><i class="fas fa-shopping-cart">(<span id="totalQuantity"></span>)</i></a>
                                         </div>
                                     </li>
-                                    <li class="d-none d-lg-block"> <a href="" class="btn header-btn">Sign in</a></li>
+                                    {{-- <li class="d-none d-lg-block"> <a href="" class="btn header-btn">Sign in</a></li> --}}
                                 </ul>
                             </div>
                             <!-- Mobile Menu -->

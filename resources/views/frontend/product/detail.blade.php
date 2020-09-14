@@ -38,12 +38,7 @@
                     <div class="single_product_text text-center">
                         <h3>{{$product->title}}</h3>
                         <p>
-                            Seamlessly empower fully researched growth strategies and interoperable internal or
-                            “organic” sources. Credibly innovate granular internal or “organic” sources whereas high
-                            standards in web-readiness. Credibly innovate granular internal or organic sources whereas
-                            high standards in web-readiness. Energistically scale future-proof core competencies
-                            vis-a-vis impactful experiences. Dramatically synthesize integrated schemas. with optimal
-                            networks.
+                            {{$product->description}}
                         </p>
                         <div class="card_area">
                             <h3>${{$product->price}}</h3>
@@ -60,9 +55,9 @@
                              --}}
 
                             <div class="add_to_cart">
-                                <button class="btn btn-danger addcart" data-productId="{{$product->id}}">>add to cart</button>
+                                <button class="btn btn-danger addcart" data-productId="{{$product->id}}">加入購物車</button>
                                 
-                                <a href="/cart"> <button class="btn btn-danger addcart">>go to cart</button></a>
+                                {{-- <a href="/cart"> <button class="btn btn-danger addcart">>go to cart</button></a> --}}
                             </div>
                         </div>
                     </div>
@@ -90,7 +85,7 @@
 
     $.ajax({
         method: 'POST',
-        url: '/addItemToCart',
+        url: '/cart/addItemToCart',
         data: {
             productId:productId
             },

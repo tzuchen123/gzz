@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Sort;
 use App\Banner;
 use Illuminate\Http\Request;
 use App\Services\SortService;
@@ -32,20 +33,18 @@ class IndexController extends Controller
     public function index()
     {
         $banners = $this->bannerService->getIndexDatas();
-        $sorts = $this->sortService->all();
+        // $sorts = Sort::all();
         // 熱銷商品
         $hotProducts = $this->productService->getHotDatas();
-        return view('frontend.index',compact('banners','sorts','hotProducts'));
+        return view('frontend.index',compact('banners','hotProducts'));
     }
 
     public function merchandise(Request $request)
     {
         //商品總頁
-       
-        $sorts = $this->sortService->all();
         $products = $this->productService->getDatasBySort($request->sortId);
   
-        return view('frontend.product.index',compact('sorts','products'));
+        return view('frontend.product.index',compact('products'));
 
     }
 
@@ -53,11 +52,9 @@ class IndexController extends Controller
     {
       
         //商品詳細頁
-        $sorts = $this->sortService->all();
+    
         $product = $this->productService->findById($request->productId);
-      
-     
-        return view('frontend.product.detail',compact('sorts','product'));
+        return view('frontend.product.detail',compact('product'));
 
     }
 

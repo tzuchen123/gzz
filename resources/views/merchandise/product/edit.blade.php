@@ -39,6 +39,14 @@
 @slot('label', '標題')
 @endcomponent
 
+@component('layouts.component.form.dropdown')
+@slot('options', $sorts)
+@slot('model', $model)
+@slot('id', 'sort_id')
+@slot('name', 'sort_id')
+@slot('label', '商品分類')
+@endcomponent
+
 @component('layouts.component.form.input')
 @slot('model', $model)
 @slot('name', 'price')
@@ -51,6 +59,13 @@
 @slot('name', 'amount')
 @slot('id', 'amount')
 @slot('label', '數量')
+@endcomponent
+
+@component('layouts.component.form.textarea')
+@slot('model', $model)
+@slot('name', 'description')
+@slot('id', 'description')
+@slot('label', '商品描述')
 @endcomponent
 
 @component('layouts.component.form.image')
@@ -82,13 +97,7 @@
 </div>
 
 
-@component('layouts.component.form.dropdown')
-@slot('options', $sorts)
-@slot('model', $model)
-@slot('id', 'sort_id')
-@slot('name', 'sort_id')
-@slot('label', '商品分類')
-@endcomponent
+
 <br>
 
 @endcomponent

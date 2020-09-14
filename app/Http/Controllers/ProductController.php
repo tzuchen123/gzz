@@ -38,10 +38,14 @@ class ProductController extends Controller
         // 透過productservice抓資料，直接呼叫 Service 包裝好的 method
         $models = $this->productService->getDatas();
 
-        // foreach ($models as $item) {
-        //     dd($item->sort->id);
-        // }
+        return view('merchandise.product.list', compact('models'));
+    }
 
+    public function sortIndex($sortId)
+    {
+       
+        // 透過productservice抓資料，直接呼叫 Service 包裝好的 method
+        $models = $this->productService->getDatasBySort($sortId);
         return view('merchandise.product.list', compact('models'));
     }
 
